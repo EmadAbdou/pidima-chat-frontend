@@ -162,6 +162,7 @@ body {
   background: var(--input-bg);
   border-top: 1px solid var(--border);
   gap: 0.5rem;
+  position: relative; /* Ensure emoji picker is positioned relative to input bar */
 }
 #message-input {
   flex: 1 1 auto;
@@ -191,9 +192,10 @@ body {
   background: var(--primary-light);
 }
 .emoji-picker {
+  /* Fix: Anchor emoji picker to chat form, above input bar */
   position: absolute;
-  bottom: 60px;
-  right: 60px;
+  right: 0.5rem;
+  bottom: 3.5rem;
   background: var(--emoji-bg);
   border: 1px solid var(--emoji-border);
   border-radius: 0.7em;
@@ -259,7 +261,7 @@ body {
     min-width: 0;
   }
   .emoji-picker {
-    right: 10px;
-    bottom: 70px;
+    right: 0.5rem;
+    bottom: 3.5rem;
   }
 }

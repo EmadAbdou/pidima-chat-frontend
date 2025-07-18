@@ -41,7 +41,10 @@ chatClose.addEventListener('click', () => {
 });
 
 // --- Emoji Picker ---
+// List of emojis to show in the picker
 const EMOJIS = ['😀','😁','😂','🤣','😊','😍','😎','😢','😭','😡','👍','🙏','👏','🎉','🔥','💡','🤖','😇','😉','😅','😜','😬','😱','🥳','🤩','😏','😴','🤔','🙌','💯','🥰','😋','😆','😃','😄','😚','😙','😗','😘','😽','😺','😸','😹','😻','😼','😽','🙀','😿','😾'];
+
+// Render the emoji picker grid
 function renderEmojiPicker() {
   emojiPicker.innerHTML = '';
   EMOJIS.forEach(e => {
@@ -49,6 +52,7 @@ function renderEmojiPicker() {
     btn.type = 'button';
     btn.className = 'emoji';
     btn.textContent = e;
+    // On click, insert emoji into message input
     btn.addEventListener('click', () => {
       messageInput.value += e;
       emojiPicker.hidden = true;
@@ -57,11 +61,13 @@ function renderEmojiPicker() {
     emojiPicker.appendChild(btn);
   });
 }
+// Toggle emoji picker visibility on emoji button click
 emojiBtn.addEventListener('click', (e) => {
   e.preventDefault();
   renderEmojiPicker();
   emojiPicker.hidden = !emojiPicker.hidden;
 });
+// Hide emoji picker when clicking outside
 document.addEventListener('click', (e) => {
   if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
     emojiPicker.hidden = true;
