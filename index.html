@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pidima AI Chat Sidebar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button id="chat-toggle" aria-label="Open chat sidebar">💬</button>
+  <aside id="chat-sidebar" class="chat-sidebar">
+    <header class="chat-header">
+      <span class="chat-title">Pidima AI Chat</span>
+      <button id="theme-toggle" aria-label="Toggle dark/light mode">🌙</button>
+      <button id="chat-close" aria-label="Close chat sidebar">&times;</button>
+    </header>
+    <section id="chat-messages" class="chat-messages" aria-live="polite"></section>
+    <div id="typing-indicator" class="typing-indicator" aria-live="polite" hidden>Someone is typing...</div>
+    <form id="chat-form" class="chat-form" autocomplete="off">
+      <input id="file-input" type="file" accept="image/*,.pdf,.doc,.docx,.txt" hidden>
+      <button type="button" id="attach-btn" aria-label="Attach file">📎</button>
+      <div id="file-preview" class="file-preview" hidden></div>
+      <input id="message-input" type="text" placeholder="Type a message..." maxlength="500" required autocomplete="off">
+      <button type="button" id="emoji-btn" aria-label="Insert emoji">😊</button>
+      <div id="emoji-picker" class="emoji-picker" hidden></div>
+      <button type="submit" id="send-btn" aria-label="Send message">➤</button>
+    </form>
+  </aside>
+  <script src="script.js"></script>
+</body>
+</html>
