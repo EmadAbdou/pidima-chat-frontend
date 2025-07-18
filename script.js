@@ -40,45 +40,95 @@ chatClose.addEventListener('click', () => {
   chatToggle.style.display = 'block';
 });
 
-// --- Emoji Picker ---
-// List of emojis to show in the picker
-const EMOJIS = ['😀','😁','😂','🤣','😊','😍','😎','😢','😭','😡','👍','🙏','👏','🎉','🔥','💡','🤖','😇','😉','😅','😜','😬','😱','🥳','🤩','😏','😴','🤔','🙌','💯','🥰','😋','😆','😃','😄','😚','😙','😗','😘','😽','😺','😸','😹','😻','😼','😽','🙀','😿','😾'];
+// --- Facebook-style Emoji Picker Data ---
+const EMOJI_CATEGORIES = {
+  smileys: ['😀','😁','😂','🤣','😊','😍','😎','😢','😭','😡','😃','😄','😅','😆','😉','😋','😜','😝','😛','😏','😒','😞','😔','😟','😕','🙁','☹️','😣','😖','😫','😩','🥺','😢','😭','😤','😠','😡','🤬','🤯','😳','🥵','🥶','😱','😨','😰','😥','😓','🤗','🤔','🤭','🤫','🤥','😶','😐','😑','😬','🙄','😯','😦','😧','😮','😲','🥱','😴','🤤','😪','😵','🤐','🥴','🤢','🤮','🤧','😷','🤒','🤕','🤑','🤠','😈','👿','👹','👺','🤡','💩','👻','💀','☠️','👽','👾','🤖','😺','😸','😹','😻','😼','😽','🙀','😿','😾'],
+  animals: ['🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐨','🐯','🦁','🐮','🐷','🐽','🐸','🐵','🙈','🙉','🙊','🐒','🐔','🐧','🐦','🐤','🐣','🐥','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🐛','🦋','🐌','🐞','🐜','🦟','🦗','🕷️','🦂','🐢','🐍','🦎','🦖','🦕','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🐊','🐅','🐆','🦓','🦍','🦧','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🦥','🦦','🦨','🦡','🐁','🐀','🐇','🐿️','🦔'],
+  food: ['🍏','🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶️','🫑','🌽','🥕','🫒','🧄','🧅','🥔','🍠','🥐','🥯','🍞','🥖','🥨','🥞','🧇','🧀','🍖','🍗','🥩','🥓','🍔','🍟','🍕','🌭','🥪','🌮','🌯','🥙','🧆','🥚','🍳','🥘','🍲','🥣','🥗','🍿','🧈','🧂','🥫','🍱','🍘','🍙','🍚','🍛','🍜','🍝','🍠','🍢','🍣','🍤','🍥','🥮','🍡','🥟','🥠','🥡','🦪','🍦','🍧','🍨','🍩','🍪','🎂','🍰','🧁','🥧','🍫','🍬','🍭','🍮','🍯','🍼','🥛','☕','🍵','🧃','🥤','🧋','🍶','🍺','🍻','🥂','🍷','🥃','🍸','🍹','🍾','🧉','🍽️','🍴','🥄'],
+  activities: ['⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🥏','🎱','🪀','🏓','🏸','🥅','🏒','🏑','🏏','🥍','🏹','🎣','🤿','🥊','🥋','🎽','🛹','🛷','⛸️','🥌','🛼','🛶','⛵','🚣‍♂️','🚣‍♀️','🧗‍♂️','🧗‍♀️','🏇','⛷️','🏂','🏌️‍♂️','🏌️‍♀️','🏄‍♂️','🏄‍♀️','🏊‍♂️','🏊‍♀️','🤽‍♂️','🤽‍♀️','🚴‍♂️','🚴‍♀️','🚵‍♂️','🚵‍♀️','🤹‍♂️','🤹‍♀️','🧘‍♂️','🧘‍♀️','🎯','🎳','🎮','🎰','🎲','🧩','♟️','🃏','🀄','🎴','🎭','🖼️','🎨','🧵','🧶','👓','🕶️','🥽','🥼','🦺','👔','👕','👖','🧣','🧤','🧥','🧦','👗','👘','🥻','🩱','🩲','🩳','👙','👚','👛','👜','👝','🎒','👞','👟','🥾','🥿','👠','👡','👢','👑','👒','🎩','🎓','🧢','⛑️','📿','💄','💍','💎'],
+  travel: ['✈️','🚗','🚕','🚙','🚌','🚎','🏎️','🚓','🚑','🚒','🚐','🚚','🚛','🚜','🛴','🚲','🛵','🏍️','🛺','🚨','🚔','🚍','🚘','🚖','🚡','🚠','🚟','🚃','🚋','🚞','🚝','🚄','🚅','🚈','🚂','🚆','🚇','🚊','🚉','🚁','🚟','🚠','🚡','🛰️','🚀','🛸','🚢','⛴️','🛳️','⛵','🚤','🛥️','🛶','⛽','🚧','🚦','🚥','🚏','🗺️','🗿','🗽','🗼','🏰','🏯','🏟️','🎡','🎢','🎠','⛲','⛱️','🏖️','🏝️','🏜️','🌋','⛰️','🏔️','🗻','🏕️','⛺','🏠','🏡','🏘️','🏚️','🏗️','🏭','🏢','🏬','🏣','🏤','🏥','🏦','🏨','🏩','🏪','🏫','🏩','💒','🏛️','⛪','🕌','🛕','🕍','🕋','⛩️','🛤️','🛣️','🗾','🎑','🏞️','🌅','🌄','🌠','🎇','🎆','🌇','🌆','🏙️','🌃','🌌','🌉','🌁'],
+  objects: ['💡','🔦','🕯️','💸','💵','💴','💶','💷','💰','💳','🧾','💎','⚖️','🔧','🔨','⚒️','🛠️','⛏️','🔩','⚙️','🧰','🧲','🧪','🧫','🧬','🔬','🔭','📡','💻','🖥️','🖨️','⌨️','🖱️','🖲️','💽','💾','💿','📀','📼','📷','📸','📹','🎥','📽️','🎞️','📞','☎️','📟','📠','📺','📻','🎙️','🎚️','🎛️','⏱️','⏲️','⏰','🕰️','⌛','⏳','📡','🔋','🔌','💡','🔦','🕯️','🧯','🛢️','💸','💵','💴','💶','💷','💰','💳','🧾','💎','⚖️','🔧','🔨','⚒️','🛠️','⛏️','🔩','⚙️','🧰','🧲','🧪','🧫','🧬','🔬','🔭','📡'],
+  symbols: ['❤️','💛','💚','💙','💜','🖤','🤍','🤎','💔','❣️','💕','💞','💓','💗','💖','💘','💝','💟','☮️','✝️','☪️','🕉️','☸️','✡️','🔯','🕎','☯️','☦️','🛐','⛎','♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓','🆔','⚛️','🉑','☢️','☣️','📴','📳','🈶','🈚','🈸','🈺','🈷️','🈯','🉐','㊙️','㊗️','🈴','🈵','🈹','🈲','🅰️','🅱️','🆎','🆑','🅾️','🆘','❌','⭕','🛑','⛔','📛','🚫','💯','💢','♨️','🚷','🚯','🚳','🚱','🔞','📵','🚭','❗','❓','‼️','⁉️','🔅','🔆','〽️','⚠️','🚸','🔱','⚜️','🔰','♻️','✅','🈯','💹','❇️','✳️','❎','🌐','💠','Ⓜ️','🌀','💤','🏧','🚾','♿','🅿️','🈂️','🛂','🛃','🛄','🛅','🚹','🚺','🚼','🚻','🚮','🎦','📶','🈁','🔣','ℹ️','🔤','🔡','🔠','🆖','🆗','🆙','🆒','🆕','🆓','0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟','🔢','#️⃣','*️⃣','▶️','⏸️','⏯️','⏹️','⏺️','⏭️','⏮️','⏩','⏪','⏫','⏬','⏸️','⏹️','⏺️','⏭️','⏮️','⏩','⏪','⏫','⏬','🔼','🔽','⏫','⏬','🛐','🛑','⛔','📛','🚫','💯','💢','♨️','🚷','🚯','🚳','🚱','🔞','📵','🚭','❗','❓','‼️','⁉️','🔅','🔆','〽️','⚠️','🚸','🔱','⚜️','🔰','♻️','✅','🈯','💹','❇️','✳️','❎','🌐','💠','Ⓜ️','🌀','💤','🏧','🚾','♿','🅿️','🈂️','🛂','🛃','🛄','🛅','🚹','🚺','🚼','🚻','🚮','🎦','📶','🈁','🔣','ℹ️','🔤','🔡','🔠','🆖','🆗','🆙','🆒','🆕','🆓','0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟','🔢','#️⃣','*️⃣','▶️','⏸️','⏯️','⏹️','⏺️','⏭️','⏮️','⏩','⏪','⏫','⏬','⏸️','⏹️','⏺️','⏭️','⏮️','⏩','⏪','⏫','⏬','🔼','🔽','⏫','⏬'],
+};
+let currentCategory = 'smileys';
+let emojiSearchTerm = '';
 
-// Render the emoji picker grid
-function renderEmojiPicker() {
-  emojiPicker.innerHTML = '';
-  EMOJIS.forEach(e => {
+function renderEmojiGrid() {
+  const grid = document.querySelector('.emoji-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  let emojis = EMOJI_CATEGORIES[currentCategory] || [];
+  if (emojiSearchTerm) {
+    emojis = Object.values(EMOJI_CATEGORIES).flat().filter(e => e.includes(emojiSearchTerm));
+  }
+  if (emojis.length === 0) {
+    grid.innerHTML = '<div style="grid-column: span 8; text-align:center; color:var(--msg-status);">No emoji found.</div>';
+    return;
+  }
+  emojis.forEach(e => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'emoji';
     btn.textContent = e;
-    // On click, insert emoji into message input
     btn.addEventListener('click', () => {
-      messageInput.value += e;
-      emojiPicker.hidden = true;
+      insertAtCursor(messageInput, e);
+      document.getElementById('emoji-picker').classList.remove('is-open');
       messageInput.focus();
     });
-    emojiPicker.appendChild(btn);
+    grid.appendChild(btn);
   });
 }
-// Toggle emoji picker visibility on emoji button click
+function insertAtCursor(input, text) {
+  const start = input.selectionStart;
+  const end = input.selectionEnd;
+  const value = input.value;
+  input.value = value.slice(0, start) + text + value.slice(end);
+  input.selectionStart = input.selectionEnd = start + text.length;
+}
+// Render emoji picker with search and categories
+function renderEmojiPicker() {
+  emojiSearchTerm = '';
+  currentCategory = 'smileys';
+  document.getElementById('emoji-search').value = '';
+  document.querySelectorAll('.emoji-cat').forEach(btn => btn.classList.remove('active'));
+  document.querySelector('.emoji-cat[data-cat="smileys"]').classList.add('active');
+  renderEmojiGrid();
+}
+// Ensure emoji picker is hidden by default on chat open
+window.addEventListener('DOMContentLoaded', () => {
+  const picker = document.getElementById('emoji-picker');
+  if (picker) picker.classList.remove('is-open');
+  const filePreview = document.getElementById('file-preview');
+  if (filePreview) filePreview.classList.remove('has-file');
+});
+
+// Toggle emoji picker open/close on emoji button click
 emojiBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  renderEmojiPicker();
-  emojiPicker.hidden = !emojiPicker.hidden;
+  const picker = document.getElementById('emoji-picker');
+  picker.classList.toggle('is-open');
+  if (picker.classList.contains('is-open')) {
+    renderEmojiPicker();
+    document.getElementById('emoji-search').focus();
+  }
 });
-// Hide emoji picker when clicking outside
+// Hide picker on outside click
+// (keep this after the above for correct event order)
 document.addEventListener('click', (e) => {
-  if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
-    emojiPicker.hidden = true;
+  const picker = document.getElementById('emoji-picker');
+  if (!picker.contains(e.target) && e.target !== emojiBtn) {
+    picker.classList.remove('is-open');
   }
 });
 
-// --- File Attachment Preview ---
-attachBtn.addEventListener('click', () => fileInput.click());
+// Only show file preview if a file is selected
 fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
-  if (!file) return;
+  if (!file) {
+    filePreview.classList.remove('has-file');
+    filePreview.innerHTML = '';
+    return;
+  }
   filePreview.innerHTML = '';
   let preview;
   if (file.type.startsWith('image/')) {
@@ -96,11 +146,11 @@ fileInput.addEventListener('change', () => {
   removeBtn.innerHTML = '&times;';
   removeBtn.addEventListener('click', () => {
     fileInput.value = '';
-    filePreview.hidden = true;
+    filePreview.classList.remove('has-file');
     filePreview.innerHTML = '';
   });
   filePreview.appendChild(removeBtn);
-  filePreview.hidden = false;
+  filePreview.classList.add('has-file');
 });
 
 // --- Message Data & Status Simulation ---
@@ -217,6 +267,7 @@ function updateUserMessageStatus() {
 chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const text = messageInput.value.trim();
+  // Allow sending if there is text OR a file
   if (!text && !fileInput.files[0]) return;
   let file = null;
   if (fileInput.files[0]) {
@@ -227,12 +278,12 @@ chatForm.addEventListener('submit', (e) => {
       url: URL.createObjectURL(f)
     };
     fileInput.value = '';
-    filePreview.hidden = true;
+    filePreview.classList.remove('has-file');
     filePreview.innerHTML = '';
   }
   const msg = addMessage({text, file, from: 'user', status: 'sent', timestamp: Date.now()});
   messageInput.value = '';
-  emojiPicker.hidden = true;
+  emojiPicker.classList.remove('is-open');
   // Simulate AI typing and reply
   setTimeout(simulateAITyping, 600);
   updateUserMessageStatus();
@@ -257,3 +308,7 @@ document.addEventListener('keydown', (e) => {
 
 // --- Initial Render ---
 renderMessages();
+attachBtn.addEventListener('click', () => fileInput.click());
+
+// Remove 'required' attribute from message input to allow file-only messages
+messageInput.removeAttribute('required');

@@ -11,18 +11,37 @@
   <aside id="chat-sidebar" class="chat-sidebar">
     <header class="chat-header">
       <span class="chat-title">Pidima AI Chat</span>
-      <button id="theme-toggle" aria-label="Toggle dark/light mode">🌙</button>
+      <div>
+         <button id="theme-toggle" aria-label="Toggle dark/light mode">🌙</button>
       <button id="chat-close" aria-label="Close chat sidebar">&times;</button>
+      </div>
     </header>
     <section id="chat-messages" class="chat-messages" aria-live="polite"></section>
     <div id="typing-indicator" class="typing-indicator" aria-live="polite" hidden>Someone is typing...</div>
     <form id="chat-form" class="chat-form" autocomplete="off">
       <input id="file-input" type="file" accept="image/*,.pdf,.doc,.docx,.txt" hidden>
       <button type="button" id="attach-btn" aria-label="Attach file">📎</button>
-      <div id="file-preview" class="file-preview" hidden></div>
-      <input id="message-input" type="text" placeholder="Type a message..." maxlength="500" required autocomplete="off">
-      <button type="button" id="emoji-btn" aria-label="Insert emoji">😊</button>
-      <div id="emoji-picker" class="emoji-picker" hidden></div>
+      <div id="file-preview" class="file-preview"></div>
+      <div class="input-wrapper">
+        <input id="message-input" type="text" placeholder="Type a message..." maxlength="500" required autocomplete="off">
+        <button type="button" id="emoji-btn" aria-label="Insert emoji" class="emoji-inside">😊</button>
+        <div id="emoji-picker" class="emoji-picker" >
+          <div class="emoji-search-bar">
+            <input type="text" id="emoji-search" placeholder="Search emoji..." autocomplete="off">
+          </div>
+          <div class="emoji-categories">
+            <button type="button" class="emoji-cat" data-cat="smileys">😃</button>
+            <button type="button" class="emoji-cat" data-cat="animals">🐻</button>
+            <button type="button" class="emoji-cat" data-cat="food">🍔</button>
+            <button type="button" class="emoji-cat" data-cat="activities">⚽</button>
+            <button type="button" class="emoji-cat" data-cat="travel">✈️</button>
+            <button type="button" class="emoji-cat" data-cat="objects">💡</button>
+            <button type="button" class="emoji-cat" data-cat="symbols">❤️</button>
+          </div>
+          <div class="emoji-grid"></div>
+          <div class="emoji-fallback" style="display:none; color:var(--msg-status); font-size:1em; padding:0.5em;">Emoji not supported on this device/browser.</div>
+        </div>
+      </div>
       <button type="submit" id="send-btn" aria-label="Send message">➤</button>
     </form>
   </aside>
